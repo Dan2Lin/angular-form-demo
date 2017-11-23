@@ -1,0 +1,40 @@
+<form #myForm = "ngForm" (ngSubmit) = "onSubmit(myForm.value,myForm.valid)" novalidate>
+   <!-- 双向数据绑定
+      <div>用户名:<input [(ngModel)] = "model.name" type="text" name="username"/></div>
+   -->
+   <div class="form-control">
+      <label for="username">用户名:</label>
+      <input [(ngModel)] = "model.name" type="text" name="username" id="username" required #uname="ngModel"/>
+       <div [hidden] = "!myForm.form.hasError('required','username')">
+         userName is required!
+       </div>
+   </div>
+   <div class="form-control" ngModelGroup="passwordGroup" equal>
+      <div>
+        <label for="password">密码：</label>
+        <input ngModel type="password" name="password" id="password" required  minlength="6" #pass="ngModel"/>
+        <div *ngIf="pass.invalid && (pass.touched || pass.dirty)">
+          <div *ngIf="pass.errors.minlength">
+            password must be at least 6 character long
+          </div>
+        </div>
+      </div>
+      <div>
+       <label for="confirmPass">确认密码:</label>
+       <input ngModel type="password" name="confirmPass" id="confirmPass" required/>
+      </div>
+     <div [hidden] = "!myForm.form.hasError('equal','passwordGroup')">
+         两次密码不一致!
+     </div>
+   </div>
+   <div class="form-control">
+     <label for="mobile">电话：</label>
+     <input ngModel type="text" name="mobile" id="mobile" /></div>
+   <div class="form-control">
+      <label for="hobby">爱好：</label>
+      <select name="hobby" id="hobby" ngModel>
+        <option *ngFor="let hobby of hobbys" [value]='hobby'>{{hobby}}</option>
+      </select>
+   </div>
+   <div><input type="submit" value="提交" [disabled] = "!myForm.form.valid"/></div>
+</form>
