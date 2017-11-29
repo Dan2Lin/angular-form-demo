@@ -1,7 +1,4 @@
-<form #myForm = "ngForm" (ngSubmit) = "onSubmit(myForm.value,myForm.valid)" novalidate>
-   <!-- 双向数据绑定
-      <div>用户名:<input [(ngModel)] = "model.name" type="text" name="username"/></div>
-   -->
+<form #myForm = "ngForm" class="form" (ngSubmit) = "onSubmit(myForm.value,myForm.valid)" novalidate>
    <div class="form-control">
       <label for="username">用户名:</label>
       <input [(ngModel)] = "model.name" type="text" name="username" id="username" required #uname="ngModel"/>
@@ -9,30 +6,35 @@
          userName is required!
        </div>
    </div>
-   <div class="form-control" ngModelGroup="passwordGroup" equal>
+   <div class="form-control1" ngModelGroup="passwordGroup" equal>
       <div>
         <label for="password">密码：</label>
         <input ngModel type="password" name="password" id="password" required  minlength="6" #pass="ngModel"/>
         <div *ngIf="pass.invalid && (pass.touched || pass.dirty)">
           <div *ngIf="pass.errors.minlength">
-            password must be at least 6 character long
+            密码长度不少于6位
           </div>
         </div>
       </div>
       <div>
-       <label for="confirmPass">确认密码:</label>
-       <input ngModel type="password" name="confirmPass" id="confirmPass" required/>
+        <label for="confirmPass">确认密码:</label>
+        <input ngModel type="password" name="confirmPass" id="confirmPass" required/>
       </div>
-     <div [hidden] = "!myForm.form.hasError('equal','passwordGroup')">
-         两次密码不一致!
-     </div>
+      <div [hidden] = "!myForm.form.hasError('equal','passwordGroup')">
+        两次密码不一致!
+      </div>
    </div>
-   <div class="form-control">
+   <div class="form-control1">
      <label for="mobile">电话：</label>
-     <input ngModel type="text" name="mobile" id="mobile" /></div>
-   <div class="form-control">
+     <input ngModel type="text" name="mobile" id="mobile" mobile/>
+   </div>
+  <div [hidden] = "!myForm.form.hasError('mobile','mobile')">
+     电话格式不正确
+  </div>
+   <div class="form-control1">
       <label for="hobby">爱好：</label>
-      <select name="hobby" id="hobby" ngModel>
+      <select name="hobby" id="hobby" [ngModel]= 'model.default'>
+        <option value="-请选择-" disabled>-请选择-</option>
         <option *ngFor="let hobby of hobbys" [value]='hobby'>{{hobby}}</option>
       </select>
    </div>

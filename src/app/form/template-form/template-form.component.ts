@@ -6,8 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./template-form.component.css']
 })
 export class TemplateFormComponent implements OnInit {
-   model = {
-    'name' : 'zhangsan'
+  model = {
+    'name' : 'zhangsan',
+    'default':'-请选择-'
   }
   hobbys = ['Read', 'Music', 'Food'];
   constructor() { }

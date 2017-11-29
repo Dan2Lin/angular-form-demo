@@ -1,3 +1,42 @@
-<p>
-  reactive-form works!
-</p>
+<form class="form" [formGroup] = "formModel" (submit) = "onSubmit()">
+  <div class="form-control">
+    <label for="username">用户名:</label>
+    <input type="text" name="username" id="username" formControlName="username"/>
+  </div>
+  <div [hidden] = "formModel.get('username').valid">
+    <div class="form-validate" [hidden]="!formModel.hasError('required','username')">用户名不能为空</div>
+    <div class="form-validate" [hidden]="!formModel.hasError('minlength','username')">用户名长度不少于6位</div>
+  </div>
+  <div class="form-control height68" formGroupName="passwords">
+    <div>
+      <label for="password">密码：</label>
+      <input type="password" name="password" id="password" formControlName="password">
+    </div>
+    <div class="form-validate" [hidden]="!formModel.hasError('minlength',['passwords','password'])">
+       密码长度不低于6位
+    </div>
+    <div>
+      <label for="confirmPass">确认密码:</label>
+      <input type="password" name="confirmPass" id="confirmPass" formControlName="confirmPass"/>
+    </div>
+  </div>
+  <div class="form-validate" [hidden]="!formModel.hasError('equal','passwords')">
+    {{formModel.getError('equal','passwords')?.desc}}
+  </div>
+  <div class="form-control">
+    <label for="mobile">电话：</label>
+    <input type="text" name="mobile" id="mobile" formControlName="mobile"/>
+  </div>
+  <div [hidden]="formModel.get('mobile').valid || formModel.get('mobile').untouched">
+     <div [hidden]="!formModel.hasError('mobile','mobile')">请输入正确的电话格式</div>
+  </div>
+  <div class="form-control">
+    <label for="hobby">爱好：</label>
+    <select name="hobby" id="hobby" formControlName="hobby">
+      <option value="-请选择-" disabled>-请选择-</option>
+      <option *ngFor="let hobby of model.hobbys" [value]='hobby'>{{hobby}}</option>
+    </select>
+  </div>
+  <div><input type="submit" value="提交"/></div>
+</form>
+
